@@ -16,21 +16,32 @@ public class GuessingGame extends JFrame {
 	public void checkGuess() {
 		String guessTxt = txtGuess.getText();
 		String message = "";
+		try {
 		int guess = Integer.parseInt(guessTxt);
 		if (guess < theNumber)
 			message = guess + " is too low. Try Again..";
 		else if (guess > theNumber)
 			message = guess + " is too high. Try Again..";
-		else
-			message = guess + " is correct. You WIN!";
+		else {
+			message = guess + " is correct. You WIN! Let's play again!";
+			newGame();
+		}
+		} catch (Exception e) {
+			message = "Enter a whole number between 1 - 100.";
+			}
+		finally {
 		lblOutput.setText(message);
-	}
+		txtGuess.requestFocus();
+		txtGuess.selectAll();
+			}
+		}
+		
 	public void newGame() {
 		theNumber = (int)(Math.random() * 100 + 1);
 	}
 	public GuessingGame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Rohan's Hi-Lo Guessing Game");
+		setTitle("Just a game!");
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Rohan's Guessing Game");
@@ -64,7 +75,14 @@ public class GuessingGame extends JFrame {
 		txtGuess.setBounds(193, 87, 53, 20);
 		getContentPane().add(txtGuess);
 		txtGuess.setColumns(10);
+		txtGuess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			checkGuess();
+			}
+			});
 	}
+	
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
